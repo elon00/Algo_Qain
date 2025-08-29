@@ -1,0 +1,35 @@
+#pragma version 5
+
+// Only allow spending from this logic account as a single Payment txn
+txn TypeEnum
+int pay
+==
+txn GroupIndex
+int 0
+==
+&&
+
+// Prevent rekeying
+txn RekeyTo
+global ZeroAddress
+==
+
+// Only allow sending to ADMIN or closing to ADMIN/zero
+txn Receiver
+addr LXXP4M5SLSC3K47O2WWLSVNJESIEFHDQQQBRB2GX777VE53YWQJ4MNEKWU
+==
+txn CloseRemainderTo
+global ZeroAddress
+==
+||
+txn CloseRemainderTo
+addr LXXP4M5SLSC3K47O2WWLSVNJESIEFHDQQQBRB2GX777VE53YWQJ4MNEKWU
+==
+||
+
+// ensure all conditions
+&&
+&&
+&&
+
+return
