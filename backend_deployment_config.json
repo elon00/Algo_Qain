@@ -1,0 +1,165 @@
+{
+  "deployment": {
+    "name": "algorand-launchpad-backend",
+    "framework": "FastAPI",
+    "python_version": "3.9",
+    "platforms": ["railway", "heroku", "digitalocean"]
+  },
+
+  "railway": {
+    "config": {
+      "build": {
+        "builder": "NIXPACKS"
+      },
+      "deploy": {
+        "startCommand": "uvicorn backend_fastapi:app --host 0.0.0.0 --port $PORT"
+      }
+    },
+    "environment_variables": {
+      "DATABASE_URL": "sqlite:///./launchpad.db",
+      "SECRET_KEY": "your-secret-key-here",
+      "ALGOD_ADDRESS": "https://testnet-algorand.api.purestake.io/ps2",
+      "ALGOD_TOKEN": "your-purestake-api-key"
+    }
+  },
+
+  "heroku": {
+    "config": {
+      "buildpacks": [
+        "heroku/python"
+      ]
+    },
+    "Procfile": "web: uvicorn backend_fastapi:app --host 0.0.0.0 --port $PORT",
+    "requirements.txt": [
+      "fastapi==0.104.1",
+      "uvicorn[standard]==0.24.0",
+      "python-multipart==0.0.6",
+      "py-algorand-sdk==2.5.0",
+      "sqlalchemy==2.0.23",
+      "alembic==1.12.1",
+      "pydantic==2.5.0",
+      "python-jose[cryptography]==3.3.0",
+      "passlib[bcrypt]==1.7.4"
+    ]
+  },
+
+  "dependencies": {
+    "required": [
+      "fastapi",
+      "uvicorn[standard]",
+      "py-algorand-sdk",
+      "sqlalchemy",
+      "alembic",
+      "pydantic",
+      "python-jose[cryptography]",
+      "passlib[bcrypt]",
+      "python-multipart"
+    ],
+    "optional": [
+      "pytest",
+      "black",
+      "isort",
+      "flake8"
+    ]
+  },
+
+  "api_endpoints": {
+    "deposits": {
+      "GET /api/deposits": "Get user deposits",
+      "POST /api/deposits": "Create new deposit",
+      "GET /api/deposits/{id}": "Get specific deposit"
+    },
+    "airdrops": {
+      "GET /api/airdrops": "Get available airdrops",
+      "POST /api/airdrops/{id}/claim": "Claim airdrop",
+      "GET /api/airdrops/{id}": "Get airdrop details"
+    },
+    "projects": {
+      "GET /api/projects": "Get all projects",
+      "POST /api/admin/projects": "Create project (admin)",
+      "PUT /api/admin/projects/{id}": "Update project (admin)"
+    },
+    "admin": {
+      "GET /api/admin/stats": "Get platform statistics",
+      "POST /api/admin/airdrops": "Create airdrop (admin)",
+      "PUT /api/admin/airdrops/{id}/status": "Update airdrop status (admin)"
+    }
+  },
+
+  "database_schema": {
+    "users": {
+      "id": "Integer (Primary Key)",
+      "wallet_address": "String (Unique)",
+      "created_at": "DateTime",
+      "total_deposited": "Float",
+      "last_deposit": "DateTime"
+    },
+    "deposits": {
+      "id": "Integer (Primary Key)",
+      "user_id": "Integer (Foreign Key)",
+      "amount": "Float",
+      "tx_hash": "String",
+      "status": "String",
+      "created_at": "DateTime"
+    },
+    "projects": {
+      "id": "Integer (Primary Key)",
+      "name": "String",
+      "description": "Text",
+      "token_symbol": "String",
+      "total_supply": "Integer",
+      "start_date": "DateTime",
+      "end_date": "DateTime",
+      "status": "String"
+    },
+    "airdrops": {
+      "id": "Integer (Primary Key)",
+      "project_id": "Integer (Foreign Key)",
+      "total_amount": "Float",
+      "remaining_amount": "Float",
+      "min_deposit": "Float",
+      "status": "String",
+      "created_at": "DateTime"
+    }
+  },
+
+  "security_features": {
+    "authentication": "JWT tokens",
+    "authorization": "Role-based access control",
+    "rate_limiting": "100 requests per 15 minutes",
+    "input_validation": "Pydantic models",
+    "cors": "Configured for frontend domain",
+    "https": "SSL/TLS encryption"
+  },
+
+  "monitoring": {
+    "health_check": "GET /health",
+    "metrics": "GET /metrics",
+    "logging": "Structured logging with levels",
+    "error_tracking": "Sentry integration ready"
+  },
+
+  "deployment_checklist": {
+    "pre_deployment": [
+      "Set environment variables",
+      "Configure database",
+      "Test API endpoints locally",
+      "Verify Algorand connection"
+    ],
+    "deployment_steps": [
+      "Choose platform (Railway/Heroku)",
+      "Connect repository",
+      "Set environment variables",
+      "Deploy application",
+      "Verify deployment",
+      "Update frontend with backend URL"
+    ],
+    "post_deployment": [
+      "Test all API endpoints",
+      "Verify database connections",
+      "Check error logs",
+      "Monitor performance",
+      "Set up backups"
+    ]
+  }
+}

@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-algosdk
-pydantic
-sqlalchemy
-asyncpg
-httpx
-pytest
-pytest-asyncio

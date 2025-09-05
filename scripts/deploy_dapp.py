@@ -8,10 +8,14 @@ import os
 import base64
 import json
 import sys
+from dotenv import load_dotenv
 from algosdk.v2client import algod
 from algosdk import transaction, account, mnemonic, logic
 from algosdk.transaction import ApplicationCreateTxn, OnComplete
-from algosdk.future.transaction import StateSchema
+from algosdk.transaction import StateSchema
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configuration
 ALGOD_ADDRESS = os.getenv("ALGOD_ADDRESS", "https://testnet-algorand.api.purestake.io/ps2")
@@ -20,12 +24,14 @@ ADMIN_MNEMONIC = os.getenv("ADMIN_MNEMONIC", "")
 
 def setup_client():
     """Initialize Algorand client"""
-    if not ALGOD_TOKEN:
-        print("❌ ERROR: Set ALGOD_TOKEN (PureStake API key) in environment variables")
-        sys.exit(1)
+    if ALGOD_TOKEN:
+        # Use API key authentication (PureStake)
+        headers = {"X-API-Key": ALGOD_TOKEN}
+        client = algod.AlgodClient(ALGOD_TOKEN, ALGOD_ADDRESS, headers=headers)
+    else:
+        # Use no-authentication (AlgoNode or other public endpoints)
+        client = algod.AlgodClient("", ALGOD_ADDRESS)
 
-    headers = {"X-API-Key": ALGOD_TOKEN}
-    client = algod.AlgodClient(ALGOD_TOKEN, ALGOD_ADDRESS, headers=headers)
     return client
 
 def get_admin_account():
