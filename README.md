@@ -63,8 +63,8 @@ A complete, professional-grade Algorand Launchpad dApp with beautiful UI, smart 
 
 ### 1. Clone and Setup
 ```bash
-git clone <your-repo-url>
-cd algorand-launchpad
+git clone https://github.com/elon00/Algo_Qain.git
+cd Algo_Qain
 ```
 
 ### 2. Frontend Setup
