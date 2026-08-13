@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Qalgo",
+  "description": "Next-Gen 1 Quadrillion (1,000 Trillion) Post-Quantum Cryptography (PQC) \u0026 Web4 AI Automaton Blockchain Platform with Conway\u0027s Automata and Agentic AI Chatbots.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
