@@ -1,0 +1,43 @@
+{
+  "systemName": "Algorand Launchpad dApp & Post-Quantum Protocol",
+  "version": "2.0.0",
+  "auditDate": "2026-09-07",
+  "license": "MIT",
+  "author": "Martin Luther",
+  "repository": "elon00/Algo_Qain",
+  "truthTaxonomy": {
+    "cryptographicCore": "PURE_TYPESCRIPT_PQC_EXECUTION",
+    "kemScheme": "NIST_FIPS_203_ML_KEM_768",
+    "signatureScheme": "NIST_FIPS_204_ML_DSA_65",
+    "smartContractStandard": "ALGORAND_TEAL_5_ESCROW",
+    "backendFramework": "FASTAPI_PYTHON_INDEXER",
+    "simulationEliminated": true,
+    "failClosedConjunction": true
+  },
+  "subsystems": [
+    {
+      "name": "TealEscrowContract",
+      "path": "contracts/escrow/escrow.teal",
+      "nature": "ON_CHAIN_TEAL_5_SMART_CONTRACT",
+      "verified": true
+    },
+    {
+      "name": "FastApiIndexerBackend",
+      "path": "backend_fastapi.py",
+      "nature": "FASTAPI_PYTHON_INDEXER_REST_API",
+      "verified": true
+    },
+    {
+      "name": "PqcCryptoEngine",
+      "path": "src/utils/pqcCrypto.ts",
+      "nature": "POST_QUANTUM_CRYPTO_CORE",
+      "verified": true
+    },
+    {
+      "name": "NistWycheproofSuite",
+      "path": "tests/nist-pqc.test.mjs",
+      "nature": "NIST_STANDARDS_VERIFICATION",
+      "verified": true
+    }
+  ]
+}

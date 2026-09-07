@@ -1,0 +1,17 @@
+﻿{
+  "name": "algo-qain-launchpad",
+  "version": "2.0.0",
+  "description": "Algorand Post-Quantum Launchpad & Protocol",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test:nist": "node C:/Users/marti/quantumshield/node_modules/tsx/dist/cli.mjs tests/nist-pqc.test.mjs",
+    "audit:crypto": "node scripts/audit-crypto.mjs",
+    "reality:verify": "node C:/Users/marti/quantumshield/node_modules/tsx/dist/cli.mjs scripts/reality-universal.ts",
+    "reality:certify": "node C:/Users/marti/quantumshield/node_modules/tsx/dist/cli.mjs scripts/generate-urs-certificate.ts"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.4.0",
+    "@noble/post-quantum": "^0.2.0"
+  }
+}
