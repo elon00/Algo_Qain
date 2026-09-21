@@ -14,5 +14,8 @@
   "dependencies": {
     "@noble/hashes": "^1.4.0",
     "@noble/post-quantum": "^0.2.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }
