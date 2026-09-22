@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from algosdk.encoding import is_valid_address
 from algosdk.v2client import indexer
@@ -54,6 +55,13 @@ if CORS_ALLOWED_ORIGINS:
         allow_headers=["Accept", "Content-Type"],
         max_age=600,
     )
+
+class Deposit(BaseModel):
+    txid: str | None
+    sender: str | None
+    amount: int
+    round: int
+
 
 HEADERS = {"X-API-Key": INDEXER_TOKEN}
 indexer_client = indexer.IndexerClient(
