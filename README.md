@@ -1,187 +1,133 @@
-# Algorand Launchpad - Complete dApp Solution
+# Algo_Qain — Algorand Launchpad Research Prototype
 
-[![Vercel Deployment](https://img.shields.io/badge/Frontend-Vercel-000000?style=for-the-badge&logo=vercel)](https://frontend-2qi5baj30-martinlutherupa1-gmailcoms-projects.vercel.app)
-[![Algorand](https://img.shields.io/badge/Blockchain-Algorand-000000?style=for-the-badge&logo=algorand)](https://algorand.org)
-[![React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
+Algo_Qain is an original full-stack Algorand launchpad prototype combining a React frontend, a small FastAPI indexer service, Algorand smart-contract/deployment experiments, and post-quantum cryptography research.
 
-A complete, professional-grade Algorand Launchpad dApp with beautiful UI, smart contracts, and full-stack architecture.
+## Current status
 
-## 🌐 Live Demo
+**PROTOTYPE / TESTNET-ORIENTED — NOT INDEPENDENTLY AUDITED OR PRODUCTION-CERTIFIED**
 
-**Frontend**: https://frontend-2qi5baj30-martinlutherupa1-gmailcoms-projects.vercel.app
+| Area | Current evidence | Boundary |
+|---|---|---|
+| Frontend | A Vercel-hosted demonstration URL is referenced by this repository | A reachable demo does not prove production readiness |
+| FastAPI backend | Read-only deposit/indexer endpoint with bounded retries, validated escrow address, explicit CORS configuration and production HTTPS requirement | No user authentication, database, payment settlement, or production SLA is claimed |
+| Algorand contracts | TEAL/PyTeal/deployment material exists in the repository | Deployment scripts are not proof of a currently live audited contract |
+| PQC | Repository contains ML-DSA/related integration tests | Application-level tests are not independent FIPS validation or end-to-end quantum-security certification |
+| Security | CI runs syntax, Bandit, dependency audits, PQC/reality tests | No independent smart-contract/security audit is claimed |
+| Mainnet / market | Not claimed | Requires independently reproducible deployment, security review and operational evidence |
 
-**Landing Page**: https://vercel.com/martinlutherupa1-gmailcoms-projects/v0-algo-launchpad-landing-page
+## Live/demo links
 
-## ✨ Features
+Repository materials reference a Vercel frontend demonstration. Treat it as a **demo surface**, not evidence that the backend, contracts, custody model, liquidity, or production operations are live.
 
-### 🎨 Frontend (Deployed)
-- **Beautiful UI/UX**: Modern design with gradients, animations, and glass-morphism
-- **Responsive Design**: Works perfectly on all devices
-- **Wallet Integration**: MyAlgo and Pera wallet support
-- **Deposit System**: Professional form with validation and real-time feedback
-- **Dashboard**: Statistics, features showcase, and user management
+## Architecture
 
-### 🚀 Backend (Production Ready)
-- **FastAPI Framework**: High-performance REST API
-- **Database Integration**: SQLAlchemy with PostgreSQL/SQLite
-- **Authentication**: JWT tokens with secure password hashing
-- **Rate Limiting**: Protection against abuse
-- **CORS Support**: Cross-origin resource sharing configured
-
-### 🔐 Smart Contracts (Deployment Ready)
-- **Escrow Contract**: Secure fund management in TEAL
-- **Launchpad Application**: Airdrop distribution logic
-- **Security Audited**: Professional security review completed
-- **Gas Optimized**: Efficient transaction costs
-
-## 📁 Project Structure
-
-```
-├── frontend/                 # React application (Vercel deployed)
-│   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   ├── App.jsx          # Main application component
-│   │   └── index.css        # Professional styling
-│   └── package.json
-├── backend_fastapi.py        # FastAPI backend server
-├── contracts/               # Smart contract source code
-│   ├── escrow/             # Escrow contract (TEAL)
-│   └── stateful/           # Launchpad application (PyTeal)
-├── scripts/                 # Deployment and utility scripts
-├── docs/                   # Comprehensive documentation
-├── test_integration.py      # Full integration test suite
-└── PRODUCTION_DEPLOYMENT_GUIDE.md  # Production deployment guide
+```text
+frontend/                  React demonstration UI
+backend_fastapi.py         read-only Algorand indexer API
+contracts/                 Algorand smart-contract experiments
+scripts/                   deployment/reality tooling
+tests/                     integration and PQC/reality tests
 ```
 
-## 🚀 Quick Start
+## Backend security boundary
 
-### Prerequisites
-- Node.js 18+ (for frontend)
-- Python 3.9+ (for backend and contracts)
-- Git
+The backend:
 
-### 1. Clone and Setup
+- refuses startup when indexer or escrow configuration is missing;
+- validates the configured Algorand escrow address;
+- requires HTTPS indexer access in production;
+- requires an explicit CORS allowlist in production;
+- limits deposit-query result count;
+- bounds retry attempts and upstream timeout behavior;
+- does not expose deployment mnemonics or Algorand API tokens to the frontend;
+- is read-only with respect to blockchain state.
+
+It does **not** currently implement end-user authentication, custody, production rate limiting across distributed instances, or a database-backed application account system.
+
+## Configuration
+
+Copy the template and provide development/testnet values:
+
 ```bash
-git clone https://github.com/elon00/Algo_Qain.git
-cd Algo_Qain
+cp .env.template .env
 ```
 
-### 2. Frontend Setup
+Never commit real mnemonics, private keys or API credentials.
+
+Important variables:
+
+- `INDEXER_ADDRESS`
+- `INDEXER_TOKEN`
+- `ESCROW_ADDRESS`
+- `CORS_ALLOWED_ORIGINS`
+- `ENVIRONMENT`
+
+Deployment tooling may additionally require `ALGOD_ADDRESS`, `ALGOD_TOKEN` and a testnet deployment mnemonic.
+
+## Verification
+
+Python/backend:
+
 ```bash
-cd frontend
-npm install
-npm run dev
+python -m pip install -r requirements.txt
+python -m py_compile backend_fastapi.py
 ```
 
-### 3. Backend Setup
+Repository PQC/reality checks:
+
 ```bash
-pip install -r requirements.txt
-python backend_fastapi.py
+npm install --ignore-scripts
+npm test
 ```
 
-### 4. Smart Contract Deployment
+CI additionally runs Bandit plus Python and JavaScript dependency audits.
+
+A green CI run proves only the assertions covered by those checks. It does not constitute an independent audit or production certification.
+
+## Running the backend
+
+Provide valid environment values, then run with Uvicorn:
+
 ```bash
-# Make sure you have installed the dependencies from requirements.txt
-# Deploy contracts (requires API keys)
-python scripts/deploy_dapp.py
+uvicorn backend_fastapi:app --host 127.0.0.1 --port 8000
 ```
 
-## 🔧 Production Deployment
+For a public deployment, terminate TLS at a trusted reverse proxy/platform, keep secrets in the platform secret manager, set `ENVIRONMENT=production`, and configure `CORS_ALLOWED_ORIGINS` explicitly.
 
-### Frontend (Already Deployed)
-- **Platform**: Vercel
-- **URL**: https://frontend-2qi5baj30-martinlutherupa1-gmailcoms-projects.vercel.app
-- **Status**: ✅ Live and Professional
+## Smart-contract deployment
 
-### Backend Deployment
-Choose your preferred platform:
+Deployment scripts require real Algorand testnet credentials and should be treated as operator tools. Before any mainnet use:
 
-**Railway (Recommended):**
-```bash
-# 1. Create Railway account
-# 2. Connect GitHub repository
-# 3. Deploy automatically
-```
+1. independently review the TEAL/PyTeal contracts;
+2. verify application IDs/addresses through an Algorand explorer;
+3. use hardware-backed or managed signing/key custody;
+4. define upgrade, pause and incident-response procedures;
+5. test failure/recovery paths under realistic load;
+6. complete applicable legal/compliance review.
 
-**Heroku:**
-```bash
-# 1. Install Heroku CLI
-heroku create your-launchpad-backend
-git push heroku main
-```
+## Production-readiness gates
 
-### Smart Contract Deployment
-```bash
-# 1. Get PureStake API key
-# 2. Create Algorand TestNet account
-# 3. Update .env with real credentials
-# 4. Run deployment script
-python scripts/deploy_dapp.py
-```
+Do not describe Algo_Qain as production-ready until there is evidence for:
 
-## 🧪 Testing
+- deterministic/reproducible release builds;
+- pinned/managed runtime dependencies;
+- independent smart-contract and backend security review;
+- authenticated/authorized mutation flows where required;
+- durable rate limiting and abuse controls;
+- monitoring, alerting, logging and incident response;
+- backup/recovery and rollback procedures;
+- verified deployed contract/application identifiers;
+- workload and availability measurements;
+- applicable legal/compliance requirements.
 
-Run the comprehensive integration test suite:
-```bash
-python test_integration.py
-```
+## Security
 
-## 📚 Documentation
+See [SECURITY.md](SECURITY.md) for responsible disclosure and the current security boundary.
 
-- **[Production Deployment Guide](PRODUCTION_DEPLOYMENT_GUIDE.md)**: Complete production setup
-- **[API Documentation](algorand-launchpad/docs/API.md)**: Backend API reference
-- **[Security Policy](algorand-launchpad/docs/SECURITY.md)**: Security and vulnerability reporting
-- **[Compliance](algorand-launchpad/docs/COMPLIANCE.md)**: Legal and regulatory compliance
+## License
 
-## 🔐 Security
-
-- **Smart Contract Audit**: ✅ Completed
-- **Security Best Practices**: ✅ Implemented
-- **Input Validation**: ✅ Comprehensive
-- **Rate Limiting**: ✅ Configured
-- **HTTPS**: ✅ Enforced
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests: `python test_integration.py`
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](algorand-launchpad/LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Algorand Foundation** for the blockchain platform
-- **PureStake** for API services
-- **Vercel** for frontend hosting
-- **Open source community** for amazing tools and libraries
-
-## 📞 Support
-
-- **Documentation**: Check the [docs/](docs/) folder
-- **Issues**: Create a GitHub issue
-- **Discussions**: Use GitHub Discussions
+Use the repository's license files as authoritative. Third-party dependencies and copied reference material retain their original licenses.
 
 ---
 
-## 🎯 Project Status
-
-| Component | Status | Details |
-|-----------|--------|---------|
-| **Frontend** | ✅ Deployed | Live on Vercel |
-| **Backend** | ✅ Ready | Configured for deployment |
-| **Smart Contracts** | ✅ Ready | Deployment scripts ready |
-| **Documentation** | ✅ Complete | Comprehensive guides |
-| **Testing** | ✅ Suite | Integration tests ready |
-| **Security** | ✅ Audited | Professional review |
-
-**Ready for production deployment!** 🚀
-
----
-
-*Built with ❤️ for the Algorand ecosystem*
+**Market rule:** prototype, testnet, deployment-ready and production-ready are different claims. Public wording in this repository should remain narrower than the evidence.
