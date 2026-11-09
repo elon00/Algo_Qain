@@ -1,7 +1,7 @@
 {
   "engine": "REA_Reverse_Engineer_Anything",
   "status": "STRUCTURE_RECONSTRUCTED",
-  "analyzed_files": 40,
+  "analyzed_files": 42,
   "manifest": {
     "backend_deployment_config.json": {
       "bytes": 4494
@@ -50,6 +50,12 @@
     },
     "frontend\\package.json": {
       "bytes": 465
+    },
+    "reports\\RAVEN_RSI_DIAGNOSTIC.json": {
+      "bytes": 340
+    },
+    "reports\\REA_ANALYSIS.json": {
+      "bytes": 2759
     },
     "scripts\\airdrop_batch.py": {
       "bytes": 9122
@@ -124,5 +130,5 @@
       "bytes": 7779
     }
   },
-  "timestamp": 1793978788
+  "timestamp": 1794213125
 }
