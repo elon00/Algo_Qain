@@ -1,5 +1,134 @@
 {
-  "engine": "REA_Inspector",
-  "timestamp": 1794213793,
-  "total_files": 45
+  "engine": "REA_Reverse_Engineer_Anything",
+  "status": "STRUCTURE_RECONSTRUCTED",
+  "analyzed_files": 42,
+  "manifest": {
+    "backend_deployment_config.json": {
+      "bytes": 4494
+    },
+    "backend_fastapi.py": {
+      "bytes": 4881
+    },
+    "check_deployments.py": {
+      "bytes": 1998
+    },
+    "demo_deployment.py": {
+      "bytes": 12712
+    },
+    "DEPLOYMENT_README.md": {
+      "bytes": 2505
+    },
+    "package.json": {
+      "bytes": 668
+    },
+    "PRODUCTION_DEPLOYMENT_GUIDE.md": {
+      "bytes": 7581
+    },
+    "README.md": {
+      "bytes": 5437
+    },
+    "REALITY_MANIFEST.json": {
+      "bytes": 1267
+    },
+    "requirements.txt": {
+      "bytes": 43
+    },
+    "SECURITY.md": {
+      "bytes": 2175
+    },
+    "test_integration.py": {
+      "bytes": 10401
+    },
+    "URS_EVIDENCE_CERTIFICATE.json": {
+      "bytes": 11728
+    },
+    "frontend\\index.html": {
+      "bytes": 317
+    },
+    "frontend\\package-lock.json": {
+      "bytes": 62778
+    },
+    "frontend\\package.json": {
+      "bytes": 465
+    },
+    "reports\\RAVEN_RSI_DIAGNOSTIC.json": {
+      "bytes": 111
+    },
+    "reports\\REA_ANALYSIS.json": {
+      "bytes": 83
+    },
+    "scripts\\airdrop_batch.py": {
+      "bytes": 9122
+    },
+    "scripts\\audit-crypto.mjs": {
+      "bytes": 7196
+    },
+    "scripts\\compile_and_print_lsig.py": {
+      "bytes": 1312
+    },
+    "scripts\\create_asa.py": {
+      "bytes": 2826
+    },
+    "scripts\\deploy_dapp.py": {
+      "bytes": 7195
+    },
+    "scripts\\generate-urs-certificate.ts": {
+      "bytes": 4665
+    },
+    "scripts\\reality-universal.ts": {
+      "bytes": 16815
+    },
+    "scripts\\rea_inspector.py": {
+      "bytes": 1485
+    },
+    "scripts\\rsi_engine.py": {
+      "bytes": 2039
+    },
+    "scripts\\safety_check.py": {
+      "bytes": 2123
+    },
+    "scripts\\setup_deployment.sh": {
+      "bytes": 5619
+    },
+    "src\\types.ts": {
+      "bytes": 942
+    },
+    "tests\\nist-pqc.test.mjs": {
+      "bytes": 4368
+    },
+    ".github\\workflows\\ci.yml": {
+      "bytes": 1310
+    },
+    ".github\\workflows\\qmoosa-rsi-rea-sync.yml": {
+      "bytes": 531
+    },
+    "contracts\\escrow\\escrow.teal": {
+      "bytes": 548
+    },
+    "frontend\\data\\recipients.csv": {
+      "bytes": 90
+    },
+    "frontend\\src\\App.jsx": {
+      "bytes": 14476
+    },
+    "frontend\\src\\index.css": {
+      "bytes": 7929
+    },
+    "frontend\\src\\main.jsx": {
+      "bytes": 388
+    },
+    "frontend\\src\\components\\DepositButton.jsx": {
+      "bytes": 10944
+    },
+    "frontend\\src\\components\\WalletConnect.jsx": {
+      "bytes": 5764
+    },
+    "scripts\\tests\\test_airdrop_batch.py": {
+      "bytes": 2503
+    },
+    "src\\utils\\pqcCrypto.ts": {
+      "bytes": 7779
+    }
+  },
+  "timestamp": 1794219280
 }
