@@ -62,3 +62,5 @@ deployment_info.json
 # Temporary files
 *.tmp
 *.temp
+# Lean 4 build artifacts
+lean_verify/.lake/
